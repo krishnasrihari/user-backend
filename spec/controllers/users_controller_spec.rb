@@ -17,17 +17,17 @@ RSpec.describe UsersController, type: :controller do
   describe "POST #create" do
   	context "with valid attributes" do
 	  it "create a new user" do
-	 	expect {
-	 	  post :create,  params: { data:{ type: "users", attributes: { first_name: "fname", last_name: 'lname' }} }
-	 	}.to change(User, :count).by(1)
+  	 	expect {
+  	 	  post :create,  params: { data:{ type: "users", attributes: { first_name: "fname", last_name: 'lname' }} }
+  	 	}.to change(User, :count).by(1)
 	  end
   	end
 
   	context "with invalid attributes" do
   	  it "does not save a user" do
-	 	expect {
-	 	  post :create,  params: { data:{ type: "users", attributes: { last_name: 'lname' }} }
-	 	}.to_not change(User, :count)
+    	 	expect {
+    	 	  post :create,  params: { data:{ type: "users", attributes: { last_name: 'lname' }} }
+    	 	}.to_not change(User, :count)
   	  end
   	end
   end
