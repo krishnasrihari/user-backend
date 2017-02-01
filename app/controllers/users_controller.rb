@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :update, :destroy]
+  before_action :set_user, only: [:show, :update, :destroy, :create_friend]
 
   # GET /users
   def index
@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
   # GET /users/1
   def show
-    render json: @user
+    render jsonapi: @user
   end
 
   # POST /users
@@ -38,6 +38,18 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
   end
+
+  def create_friend
+    @friend = User.new(user_params)
+
+    if @friend.save
+      @user.friendships.create(friend: @friend)
+      render jsonapi: @friend, status: :created, location: @friend
+    else
+      render jsonapi: @friend.errors , status: :unprocessable_entity
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

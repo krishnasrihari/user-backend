@@ -52,4 +52,31 @@ RSpec.describe UsersController, type: :controller do
   	  end
   	end
   end
+
+  describe "POST #create_friend" do
+    context "with valid attributes" do
+      let!(:user) { create(:user) }
+
+      it "create a new friend" do
+        expect {
+          post :create_friend,  params: {id: user, data:{ type: "users", attributes: { first_name: "friend", last_name: 'lname' }} }
+        }.to change(User, :count).by(1)
+      end
+
+      it "create a new friendship" do
+        expect {
+          post :create_friend,  params: {id: user, data:{ type: "users", attributes: { first_name: "friend", last_name: 'lname' }} }
+        }.to change(Friendship, :count).by(1)
+      end      
+    end
+
+    context "with invalid attributes" do
+      it "does not save a user" do
+        expect {
+          post :create,  params: { data:{ type: "users", attributes: { last_name: 'lname' }} }
+        }.to_not change(User, :count)
+      end
+    end
+
+  end
 end
