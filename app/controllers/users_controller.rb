@@ -18,7 +18,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      UserMailer.welcome(@user.id).deliver_now
+      #UserMailer.welcome(@user.id).deliver_now
       render jsonapi: @user, status: :created, location: @user 
     else
       render jsonapi: @user.errors , status: :unprocessable_entity
@@ -44,7 +44,7 @@ class UsersController < ApplicationController
     @friend = User.new(user_params)
 
     if @friend.save
-      UserMailer.welcome(@friend.id).deliver_now
+      #UserMailer.welcome(@friend.id).deliver_now
       @user.friendships.create(friend: @friend)
       render jsonapi: @friend, status: :created, location: @friend
     else
